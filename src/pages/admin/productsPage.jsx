@@ -92,10 +92,10 @@ export default function ProductsPage() {
 										/>
 									</td>
 									<td className="py-3 px-3 text-gray-600 text-right">
-										${item.labelledPrice}
+										RS:{item.labelledPrice}
 									</td>
 									<td className="py-3 px-3 text-green-600 font-semibold text-right">
-										${item.price}
+										RS:{item.price}
 									</td>
 									<td className="py-3 px-3 text-right">{item.stock}</td>
 									<td className="py-3 px-3">
