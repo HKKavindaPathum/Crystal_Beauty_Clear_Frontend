@@ -8,9 +8,32 @@ export default function Header() {
   const [sideDrawerOpened, setSideDrawerOpened] = useState(false);
   const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
+
+  //Load cart count
+  const loadCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    setCartCount(totalQty);
+  };
+
+  //Initial cart load
+  useEffect(() => {
+    loadCartCount();
+  }, []);
+
+  //Listen for cart updates
+  useEffect(() => {
+    window.addEventListener("cartUpdated", loadCartCount);
+    window.addEventListener("storage", loadCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", loadCartCount);
+      window.removeEventListener("storage", loadCartCount);
+    };
+  }, []);
 
   // Fetch logged-in user
   useEffect(() => {
@@ -44,7 +67,7 @@ export default function Header() {
         onClick={() => navigate("/")}
         src="/logo.png"
         alt="Logo"
-        className="w-[90px] h-[90px] object-cover cursor-pointer"
+        className="w-[80px] h-[80px] object-cover cursor-pointer"
       />
 
       {/* Links */}
@@ -68,9 +91,18 @@ export default function Header() {
 
       {/* Cart and User */}
       <div className="w-[150px] hidden md:flex justify-center items-center relative">
-        <Link to="/cart" className="text-[20px] font-bold mx-2 text-pink-900">
-          <BsCart3 />
-        </Link>
+        <div className="relative">
+          <Link to="/cart" className="text-pink-900">
+            <BsCart3 className="text-[22px]" />
+          </Link>
+
+          {cartCount > 0 && (
+            <span
+              className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+              {cartCount}
+            </span>
+          )}
+        </div>
 
         {/* User icon */}
         {user ? (
@@ -141,7 +173,19 @@ export default function Header() {
                           <Link to="/about" className="text-[20px] font-bold my-2 text-pink-700">About</Link>
                           <Link to="/contact" className="text-[20px] font-bold my-2 text-pink-700">Contact</Link>
                           <Link to="/search" className="text-[20px] font-bold my-2 text-pink-700">Search</Link>
-                          <Link to="/cart" className="text-[20px] font-bold my-2 text-pink-700"><BsCart3 /></Link>
+                          <div className="my-2 relative">
+                            <Link to="/cart" className="text-[20px] font-bold text-pink-700"
+                              onClick={() => setSideDrawerOpened(false)}
+                            >
+                              <BsCart3 className="text-[22px]" />
+                            </Link>
+                            {cartCount > 0 && (
+                              <span
+                                className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+                                {cartCount}
+                              </span>
+                            )}
+                          </div>
 
                           {/* Logout button */}
                           <button
@@ -162,7 +206,19 @@ export default function Header() {
                           <Link to="/about" className="text-[20px] font-bold my-2 text-pink-700">About</Link>
                           <Link to="/contact" className="text-[20px] font-bold my-2 text-pink-700">Contact</Link>
                           <Link to="/search" className="text-[20px] font-bold my-2 text-pink-700">Search</Link>
-                          <Link to="/cart" className="text-[20px] font-bold my-2 text-pink-700"><BsCart3 /></Link>
+                          <div className="my-2 relative">
+                            <Link to="/cart" className="text-[20px] font-bold text-pink-700"
+                                onClick={() => setSideDrawerOpened(false)}
+                              >
+                                <BsCart3 className="text-[22px]" />
+                              </Link>
+                              {cartCount > 0 && (
+                                <span
+                                  className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+                                  {cartCount}
+                                </span>
+                              )}
+                          </div>
                           <Link
                           to="/login"
                           className="px-3 py-2 bg-pink-500 text-white rounded-lg my-4 hover:bg-pink-600"

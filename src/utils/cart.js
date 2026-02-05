@@ -10,17 +10,6 @@ export function getCart() {
 	return cart;
 }
 
-export function removeFromCart(productId) {
-    let cart = getCart();
-
-    const newCart = cart.filter(
-        (item)=>{
-            return item.productId != productId;
-        }
-    )
-    localStorage.setItem("cart", JSON.stringify(newCart));
-}
-
 export function addToCart(product, qty) {
 	let cart = getCart();
 
@@ -47,7 +36,21 @@ export function addToCart(product, qty) {
         }
     }
     localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdated"));
 }
+
+export function removeFromCart(productId) {
+    let cart = getCart();
+
+    const newCart = cart.filter(
+        (item)=>{
+            return item.productId != productId;
+        }
+    )
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    window.dispatchEvent(new Event("cartUpdated"));
+}
+
 
 export function getTotal(){
     let cart = getCart();

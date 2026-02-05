@@ -7,7 +7,6 @@ import { Toaster } from 'react-hot-toast'
 import RegisterPage from './pages/register'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgetPasswordPage from './pages/forgetPassword'
-import ProductPage from './pages/client/productPage'
 
 function App() {
  
