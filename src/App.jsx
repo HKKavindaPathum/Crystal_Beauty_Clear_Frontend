@@ -12,7 +12,7 @@ function App() {
  
 
   return (
-    <GoogleOAuthProvider clientId="452872842637-njhb9p477klhh55ebs9v0qgdf30ufqc0.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="320340525416-fde0iit5idh6c5p87i7vffphtdkmf1gv.apps.googleusercontent.com">
       <BrowserRouter>
         <div >
           <Toaster position='top-right'/>
