@@ -76,16 +76,16 @@ export default function ProductPage() {
       </div>
 
       {/* Premium Search Bar */}
-      <div className="w-full max-w-xl px-4 mb-10 flex items-center relative">
+      <div className="w-full max-w-xl px-4 mb-12 flex items-center relative group">
         <input
           type="text"
           placeholder="Search products by name..."
-          className="w-full h-12 px-5 pr-12 rounded-2xl border border-pink-100 dark:border-[var(--color-dark-border)] bg-white dark:bg-[var(--color-dark-surface)] text-secondary dark:text-[var(--color-dark-text)] shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all font-main placeholder-gray-400 dark:placeholder-gray-500"
+          className="w-full h-13 px-6 pr-12 rounded-2xl border border-pink-100/80 dark:border-[var(--color-dark-border)] bg-white/70 dark:bg-[var(--color-dark-surface)]/70 backdrop-blur-md text-secondary dark:text-[var(--color-dark-text)] shadow-sm focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] focus:outline-none focus:ring-2 focus:ring-accent/80 focus:border-accent transition-all duration-300 font-main placeholder-gray-400 dark:placeholder-gray-500"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <svg
-          className="absolute right-8 text-gray-400 dark:text-gray-500 w-5 h-5 pointer-events-none"
+          className="absolute right-8 text-gray-400 dark:text-gray-500 group-focus-within:text-accent w-5 h-5 transition-colors duration-300 pointer-events-none"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -96,9 +96,9 @@ export default function ProductPage() {
       </div>
 
       {/* Grid Content Area */}
-      <div className="w-full max-w-7xl px-4 flex flex-wrap justify-center gap-6">
+      <div className="w-full max-w-7xl px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
         {isLoading ? (
-          <div className="flex justify-center mt-12 w-full">
+          <div className="flex justify-center mt-12 col-span-full">
             <Loading />
           </div>
         ) : products.length > 0 ? (
@@ -106,7 +106,7 @@ export default function ProductPage() {
             <ProductCard key={product.productId} product={product} />
           ))
         ) : (
-          <div className="flex flex-col items-center mt-12 w-full text-center gap-2">
+          <div className="flex flex-col items-center mt-12 col-span-full text-center gap-2">
             <span className="text-4xl">🛍️</span>
             <p className="text-gray-500 dark:text-gray-400 font-semibold font-main">
               No products found {query && `for "${query}"`}.
