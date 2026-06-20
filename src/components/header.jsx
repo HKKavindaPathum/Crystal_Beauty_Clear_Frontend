@@ -190,7 +190,7 @@ export default function Header() {
       {/* Side drawer for mobile */}
       {sideDrawerOpened && (
         <div 
-          className="fixed h-screen w-full bg-black/40 backdrop-blur-xs flex md:hidden z-50 transition-opacity"
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs flex md:hidden z-50 transition-opacity"
           onClick={() => setSideDrawerOpened(false)}
         >
           <div 
