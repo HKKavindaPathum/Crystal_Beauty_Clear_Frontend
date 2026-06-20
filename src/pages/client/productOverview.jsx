@@ -29,101 +29,104 @@ export default function ProductOverviewPage() {
 			});
 	}, []);
 	return (
-		<>
-			{status == "success" && (
-				<div className="w-full h-full flex flex-col md:flex-row md:max-h-full md:overflow-y-scroll pt-4">
-					<h1 className="w-full md:hidden block my-8 text-center text-4xl text-secondary font-semibold">
-								{product.name}
-								{product.altNames.map((altName, index) => {
-									return (
-										<span key={index} className="text-4xl text-gray-600 ">
-											{" "}
-											{" | " + altName}
-										</span>
-									);
-								})}
-							</h1>
-					<div className="w-full md:w-[50%]  md:h-full flex justify-center ">
+		<div className="w-full min-h-screen bg-pink-50 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
+			{status === "success" && (
+				<div className="w-full h-full flex flex-col md:flex-row pt-8 px-4 max-w-7xl mx-auto gap-8">
+					{/* Mobile Title */}
+					<h1 className="w-full md:hidden block text-center text-3xl font-fancy text-secondary dark:text-[var(--color-dark-text)] font-semibold mb-4">
+						{product.name}
+						{product.altNames.map((altName, idx) => (
+							<span key={idx} className="text-2xl text-gray-500 dark:text-gray-400 font-normal">
+								{" | " + altName}
+							</span>
+						))}
+					</h1>
+
+					{/* Left Image Slider */}
+					<div className="w-full md:w-[50%] flex justify-center items-start">
 						<ImageSlider images={product.images} />
 					</div>
-					<div className="w-full md:w-[50%] flex justify-center  md:h-full ">
-						<div className="w-full md:w-[500px] md:h-[600px] flex flex-col  items-center ">
-							<h1 className="w-full hidden md:block text-center text-4xl text-secondary font-semibold">
-								{product.name}
-								{product.altNames.map((altName, index) => {
-									return (
-										<span key={index} className="text-4xl text-gray-600 ">
-											{" "}
-											{" | " + altName}
-										</span>
-									);
-								})}
-							</h1>
-							{/* product Id */}
-							<h1 className="w-full text-center my-2 text-md text-gray-600 font-semibold">
-								{product.productId}
-							</h1>
-							<p className="w-full text-center my-2 text-md text-gray-600 font-semibold">
-								{product.description}
-							</p>
+
+					{/* Right Product Details */}
+					<div className="w-full md:w-[50%] flex flex-col items-center md:items-start pl-0 md:pl-8 pb-20">
+						{/* Desktop Title */}
+						<h1 className="hidden md:block text-left text-4xl font-fancy text-secondary dark:text-[var(--color-dark-text)] font-bold mb-4">
+							{product.name}
+							{product.altNames.map((altName, idx) => (
+								<span key={idx} className="text-3xl text-gray-500 dark:text-gray-400 font-normal">
+									{" | " + altName}
+								</span>
+							))}
+						</h1>
+						
+						<p className="text-sm text-accent dark:text-[var(--color-accent)] font-semibold tracking-wider mb-2">
+							PRODUCT ID: {product.productId}
+						</p>
+						
+						<p className="text-md text-gray-600 dark:text-gray-300 mb-6 text-center md:text-left leading-relaxed">
+							{product.description}
+						</p>
+
+						{/* Pricing */}
+						<div className="mb-6">
 							{product.labelledPrice > product.price ? (
-								<div>
-									<span className="text-4xl mx-4 text-gray-500 line-through">
-										{product.labelledPrice.toFixed(2)}
+								<div className="flex items-center gap-4">
+									<span className="text-3xl text-gray-400 line-through">
+										Rs. {product.labelledPrice.toFixed(2)}
 									</span>
-									<span className="text-4xl mx-4 font-bold text-accent">
-										{product.price.toFixed(2)}
+									<span className="text-4xl font-extrabold text-accent">
+										Rs. {product.price.toFixed(2)}
 									</span>
 								</div>
 							) : (
-								<span className="text-4xl mx-4 font-bold text-accent">
-									{product.price.toFixed(2)}
+								<span className="text-4xl font-extrabold text-accent">
+									Rs. {product.price.toFixed(2)}
 								</span>
 							)}
-							<div className="w-full flex flex-col md:flex-row gap-2 justify-center items-center mt-4">
-								<button
-									className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-accent/80 transition-all duration-300"
-									onClick={() => {
-										console.log("Old cart");
-										console.log(getCart());
-										addToCart(product, 1);
-										console.log("New cart");
-										console.log(getCart());
-										toast.success("Product added to cart");
-									}}
-								>
-									Add to Cart
-								</button>
-								<button
-									className="w-[200px] h-[50px] mx-4 cursor-pointer bg-accent text-white rounded-2xl hover:bg-accent/80 transition-all duration-300"
-									onClick={() => {
-										navigate("/checkout", {
-											state: {
-												cart: [
-													{
-														productId: product.productId,
-														name: product.name,
-														image: product.images[0],
-														price: product.price,
-														labelledPrice: product.labelledPrice,
-														qty: 1,
-													},
-												],
-											},
-										});
-									}}
-								>
-									Buy Now
-								</button>
-							</div>
-							<div className="w-3/4 pb-4 lg:w-full">
-								<ProductReviews productId={productId} />
-							</div>
 						</div>
-                    </div>  
+
+						{/* Action Buttons */}
+						<div className="w-full flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center mb-8">
+							<button
+								className="w-full sm:w-[200px] h-[50px] cursor-pointer bg-accent hover:bg-accent-hover text-white rounded-2xl shadow-md transition-all duration-300 font-bold"
+								onClick={() => {
+									addToCart(product, 1);
+									toast.success("Product added to cart");
+								}}
+							>
+								Add to Cart
+							</button>
+							<button
+								className="w-full sm:w-[200px] h-[50px] cursor-pointer bg-secondary text-white dark:bg-[var(--color-dark-surface)] dark:border dark:border-[var(--color-dark-border)] rounded-2xl hover:bg-opacity-90 shadow-md transition-all duration-300 font-bold"
+								onClick={() => {
+									navigate("/checkout", {
+										state: {
+											cart: [
+												{
+													productId: product.productId,
+													name: product.name,
+													image: product.images[0],
+													price: product.price,
+													labelledPrice: product.labelledPrice,
+													qty: 1,
+												},
+											],
+										},
+									});
+								}}
+							>
+								Buy Now
+							</button>
+						</div>
+
+						{/* Reviews */}
+						<div className="w-full border-t border-pink-100 dark:border-[var(--color-dark-border)] pt-6 mt-4">
+							<ProductReviews productId={productId} />
+						</div>
+					</div>
 				</div>
 			)}
-            {status == "loading" && <Loading/>}
-        </>
+			{status === "loading" && <Loading />}
+		</div>
 	);
 }

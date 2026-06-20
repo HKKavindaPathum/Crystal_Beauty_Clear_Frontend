@@ -46,11 +46,11 @@ export default function ProductsPage() {
 	}
 
 	return (
-		<div className="relative w-full h-full p-6 font-[var(--font-main)] bg-gray-50">
+		<div className="relative w-full h-full p-4 font-[var(--font-main)] bg-pink-50/10 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
 			{/* Add Product Floating Button */}
 			<Link
 				to="/admin/add-product"
-				className="fixed bottom-6 right-6 bg-[var(--color-accent)] hover:bg-[var(--color-secondary)] text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300"
+				className="fixed bottom-6 right-6 bg-accent hover:bg-accent-hover text-white font-bold py-3.5 px-6 rounded-full shadow-lg transition duration-300 z-10 cursor-pointer"
 			>
 				+ Add Product
 			</Link>
@@ -58,61 +58,61 @@ export default function ProductsPage() {
 			{/* Loader */}
 			{isLoading ? (
 				<div className="w-full h-[70vh] flex justify-center items-center">
-					<div className="w-14 h-14 border-4 border-gray-300 border-t-[var(--color-accent)] rounded-full animate-spin"></div>
+					<div className="w-14 h-14 border-4 border-gray-300 border-t-accent rounded-full animate-spin"></div>
 				</div>
 			) : (
-				<div className="overflow-x-auto shadow-md rounded-2xl bg-white">
-					<table className="w-full text-sm text-gray-700">
-						<thead className="bg-[var(--color-accent)] text-white text-base">
+				<div className="overflow-x-auto shadow-md rounded-2xl bg-white dark:bg-[var(--color-dark-surface)] border border-pink-100/50 dark:border-[var(--color-dark-border)]">
+					<table className="w-full text-sm text-gray-700 dark:text-gray-300">
+						<thead className="bg-accent text-white text-base">
 							<tr>
-								<th className="py-4 px-3 text-left">Product ID</th>
-								<th className="py-4 px-3 text-left">Name</th>
-								<th className="py-4 px-3">Image</th>
-								<th className="py-4 px-3 text-right">Labelled Price</th>
-								<th className="py-4 px-3 text-right">Price</th>
-								<th className="py-4 px-3 text-right">Stock</th>
-								<th className="py-4 px-3">Actions</th>
+								<th className="py-4 px-4 text-left">Product ID</th>
+								<th className="py-4 px-4 text-left">Name</th>
+								<th className="py-4 px-4 text-center">Image</th>
+								<th className="py-4 px-4 text-right">Labelled Price</th>
+								<th className="py-4 px-4 text-right">Price</th>
+								<th className="py-4 px-4 text-right">Stock</th>
+								<th className="py-4 px-4 text-center">Actions</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody className="divide-y divide-pink-50 dark:divide-[var(--color-dark-border)]">
 							{products.map((item, index) => (
 								<tr
 									key={index}
 									className={`${
-										index % 2 === 0 ? "bg-gray-50" : "bg-white"
-									} border-b hover:bg-gray-100 transition`}
+										index % 2 === 0 ? "bg-gray-50/30 dark:bg-gray-900/10" : "bg-white dark:bg-[var(--color-dark-surface)]"
+									} hover:bg-pink-50/20 dark:hover:bg-gray-800/40 transition`}
 								>
-									<td className="py-3 px-3 font-medium">{item.productId}</td>
-									<td className="py-3 px-3">{item.name}</td>
-									<td className="py-3 px-3 flex justify-center">
+									<td className="py-3.5 px-4 font-semibold text-secondary dark:text-[var(--color-dark-text)]">{item.productId}</td>
+									<td className="py-3.5 px-4 font-medium">{item.name}</td>
+									<td className="py-3.5 px-4 flex justify-center">
 										<img
 											src={item.images[0]}
 											alt={item.name}
-											className="w-14 h-14 object-cover rounded-lg shadow-sm"
+											className="w-12 h-12 object-cover rounded-lg shadow-sm border dark:border-gray-800"
 										/>
 									</td>
-									<td className="py-3 px-3 text-gray-600 text-right">
-										RS.{item.labelledPrice}
+									<td className="py-3.5 px-4 text-gray-500 dark:text-gray-400 text-right">
+										RS.{item.labelledPrice.toFixed(2)}
 									</td>
-									<td className="py-3 px-3 text-green-600 font-semibold text-right">
-										RS.{item.price}
+									<td className="py-3.5 px-4 text-accent font-bold text-right">
+										RS.{item.price.toFixed(2)}
 									</td>
-									<td className="py-3 px-3 text-right">{item.stock}</td>
-									<td className="py-3 px-3">
+									<td className="py-3.5 px-4 text-right font-medium">{item.stock}</td>
+									<td className="py-3.5 px-4">
 										<div className="flex justify-center gap-3">
 											<button
 												onClick={() => deleteProduct(item.productId)}
-												className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition"
+												className="p-2 rounded-xl bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/45 text-red-600 dark:text-red-400 transition cursor-pointer"
 											>
-												<FaTrash size={16} />
+												<FaTrash size={14} />
 											</button>
 											<button
 												onClick={() =>
 													navigate("/admin/edit-product", { state: item })
 												}
-												className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 transition"
+												className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/20 hover:bg-blue-100 dark:hover:bg-blue-900/45 text-blue-600 dark:text-blue-400 transition cursor-pointer"
 											>
-												<FaEdit size={16} />
+												<FaEdit size={14} />
 											</button>
 										</div>
 									</td>

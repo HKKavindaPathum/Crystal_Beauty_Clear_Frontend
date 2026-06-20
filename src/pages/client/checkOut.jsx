@@ -104,109 +104,119 @@ export default function CheckoutPage() {
 	}
 
 	return (
-		<div className="w-full min-h-screen bg-pink-50 flex flex-col lg:flex-row gap-6 justify-center items-start pt-6 px-4 pb-20 relative">
+		<div className="w-full min-h-screen bg-pink-50 dark:bg-[var(--color-dark-bg)] flex flex-col lg:flex-row gap-6 justify-center items-start pt-6 px-4 pb-20 relative transition-colors duration-300">
 			{cart.length === 0 ? (
 				<div className="flex flex-col items-center justify-center w-full mt-20 text-center gap-4">
-					<h2 className="text-2xl font-bold text-pink-900">Your cart is empty</h2>
-					<Link to="/products" className="bg-accent hover:bg-secondary text-white font-bold py-3 px-6 rounded-xl transition duration-300">
+					<h2 className="text-2xl font-bold text-pink-900 dark:text-[var(--color-dark-text)]">Your cart is empty</h2>
+					<Link to="/products" className="bg-accent hover:bg-accent-hover text-white font-bold py-3 px-6 rounded-xl transition duration-300 shadow-md">
 						Go Shop Products
 					</Link>
 				</div>
 			) : (
 				<>
 					{/* Product List */}
-					<div className="w-full lg:max-w-[600px] flex flex-col items-center">
+					<div className="w-full lg:max-w-[600px] flex flex-col items-center gap-3">
 						{cart.map((item, index) => {
 							return (
 								<div
 									key={item.productId}
-									className="w-full max-w-[600px] my-3 h-[120px] md:h-[100px] rounded-3xl bg-white shadow-lg flex flex-row relative justify-between items-center p-2 border border-pink-100"
+									className="w-full max-w-[600px] rounded-2xl bg-white dark:bg-[var(--color-dark-surface)] shadow-md flex flex-row items-center p-3 border border-pink-100/50 dark:border-[var(--color-dark-border)] gap-3 transition-colors duration-300"
 								>
 									<img
 										src={item.image}
-										className="w-[80px] h-[80px] object-cover rounded-2xl ml-2"
+										alt={item.name}
+										className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-xl border dark:border-gray-800"
 									/>
-									<div className="flex-1 min-w-0 flex flex-col justify-center items-start pl-4 pr-2">
-										<h1 className="text-lg text-secondary font-bold truncate w-full">
-											{item.name}
-										</h1>
-										<h1 className="text-sm text-gray-500 font-semibold truncate w-full">
-											{item.productId}
-										</h1>
-										{item.labelledPrice > item.price ? (
-											<div className="flex items-center gap-1">
-												<span className="text-sm text-gray-400 line-through">
-													{item.labelledPrice.toFixed(2)}
+									<div className="flex-1 min-w-0 flex flex-col justify-between self-stretch py-0.5">
+										<div>
+											<h3 className="text-sm md:text-md text-secondary dark:text-[var(--color-dark-text)] font-bold truncate">
+												{item.name}
+											</h3>
+											<p className="text-[10px] md:text-xs text-gray-400 font-semibold truncate">
+												{item.productId}
+											</p>
+										</div>
+										<div className="flex flex-row flex-wrap items-center justify-between mt-2 gap-2">
+											{item.labelledPrice > item.price ? (
+												<div className="flex items-center gap-1.5">
+													<span className="text-xs text-gray-400 line-through">
+														Rs. {item.labelledPrice.toFixed(2)}
+													</span>
+													<span className="text-xs md:text-sm font-bold text-accent">
+														Rs. {item.price.toFixed(2)}
+													</span>
+												</div>
+											) : (
+												<span className="text-xs md:text-sm font-bold text-accent">
+													Rs. {item.price.toFixed(2)}
 												</span>
-												<span className="text-sm font-bold text-accent">
-													{item.price.toFixed(2)}
-												</span>
+											)}
+											
+											{/* Quantity Controls & Delete */}
+											<div className="flex items-center gap-2">
+												<div className="flex flex-row justify-between items-center gap-2 bg-pink-50/50 dark:bg-[var(--color-dark-bg)] px-2 py-1 rounded-xl border dark:border-[var(--color-dark-border)]">
+													<button
+														className="text-gray-500 hover:text-accent font-bold cursor-pointer"
+														onClick={() => {
+															changeQty(index, -1);
+														}}
+													>
+														<BiMinus size={14} />
+													</button>
+													<span className="text-sm text-secondary dark:text-[var(--color-dark-text)] font-bold w-4 text-center">
+														{item.qty}
+													</span>
+													<button
+														className="text-gray-500 hover:text-accent font-bold cursor-pointer"
+														onClick={() => {
+															changeQty(index, 1);
+														}}
+													>
+														<BiPlus size={14} />
+													</button>
+												</div>
+												<button
+													className="text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 p-2 rounded-xl cursor-pointer transition flex items-center justify-center"
+													onClick={() => {
+														removeFromCart(index);
+													}}
+													aria-label="Remove item"
+												>
+													<BiTrash size={18} />
+												</button>
 											</div>
-										) : (
-											<span className="text-sm font-bold text-accent">
-												{item.price.toFixed(2)}
-											</span>
-										)}
+										</div>
 									</div>
-									<div className="w-[90px] flex flex-row justify-evenly items-center mr-8">
-										<button
-											className="text-white font-bold rounded-lg hover:bg-secondary p-1 text-sm cursor-pointer aspect-square bg-accent"
-											onClick={() => {
-												changeQty(index, -1);
-											}}
-										>
-											<BiMinus />
-										</button>
-										<h1 className="text-md text-secondary font-bold">
-											{item.qty}
-										</h1>
-										<button
-											className="text-white font-bold rounded-lg hover:bg-secondary p-1 text-sm cursor-pointer aspect-square bg-accent"
-											onClick={() => {
-												changeQty(index, 1);
-											}}
-										>
-											<BiPlus />
-										</button>
-									</div>
-									<button
-										className="absolute text-red-600 cursor-pointer hover:bg-red-600 hover:text-white rounded-full p-2 right-2 top-2 md:top-auto"
-										onClick={() => {
-											removeFromCart(index);
-										}}
-									>
-										<BiTrash />
-									</button>
 								</div>
 							);
 						})}
 					</div>
 
 					{/* Summary Form */}
-					<div className="w-full max-w-[400px] bg-white shadow-xl rounded-3xl p-6 flex flex-col justify-center items-center gap-6 border border-pink-100 lg:sticky lg:top-6">
-						<p className="text-2xl text-secondary font-bold">
+					<div className="w-full max-w-[400px] mx-auto lg:mx-0 bg-white dark:bg-[var(--color-dark-surface)] shadow-xl rounded-3xl p-6 flex flex-col justify-center items-center gap-6 border border-pink-100/50 dark:border-[var(--color-dark-border)] lg:sticky lg:top-6 transition-colors duration-300">
+						<p className="text-2xl text-secondary dark:text-[var(--color-dark-text)] font-bold">
 							Total:
-							<span className="text-accent font-bold mx-2">
-								{getTotal().toFixed(2)}
+							<span className="text-accent font-extrabold mx-2">
+								Rs. {getTotal().toFixed(2)}
 							</span>
 						</p>
 						<div className="w-full flex flex-col gap-3">
 							<input
 								type="text"
 								placeholder="Phone Number"
-								className="w-full h-[45px] px-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent"
+								className="w-full h-[45px] px-3 rounded-xl border border-gray-300 dark:border-[var(--color-dark-border)] bg-white dark:bg-[var(--color-dark-bg)] text-secondary dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-accent"
 								value={phoneNumber}
 								onChange={(e) => setPhoneNumber(e.target.value)}
 							/>
 							<textarea
 								placeholder="Delivery Address"
-								className="w-full h-[80px] p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+								className="w-full h-[90px] p-3 rounded-xl border border-gray-300 dark:border-[var(--color-dark-border)] bg-white dark:bg-[var(--color-dark-bg)] text-secondary dark:text-[var(--color-dark-text)] focus:outline-none focus:ring-2 focus:ring-accent resize-none"
 								value={address}
 								onChange={(e) => setAddress(e.target.value)}
 							/>
 						</div>
 						<button
-							className="w-full text-white bg-accent py-3 rounded-xl font-bold hover:bg-secondary transition-all duration-300 shadow-md cursor-pointer"
+							className="w-full text-white bg-accent hover:bg-accent-hover py-3.5 rounded-xl font-bold shadow-md transition duration-300 cursor-pointer"
 							onClick={placeOrder}
 						>
 							Place Order

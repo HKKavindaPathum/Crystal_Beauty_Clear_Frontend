@@ -72,29 +72,29 @@ export default function ProductReviews({ productId }) {
 
   return (
     <div className="mt-6 w-full">
-      <h2 className="text-2xl font-semibold mb-4 text-secondary">Customer Reviews</h2>
+      <h2 className="text-xl font-bold font-fancy mb-4 text-secondary dark:text-[var(--color-dark-text)]">Customer Reviews</h2>
 
       {/* Review Form */}
       <form
         onSubmit={handleSubmit}
-        className="border rounded-2xl p-3 bg-gray-50 shadow-sm mb-2 lg:mb-6 p:4"
+        className="border border-pink-100/50 dark:border-[var(--color-dark-border)] rounded-2xl p-4 bg-gray-50 dark:bg-[var(--color-dark-bg)] shadow-xs mb-6"
       >
-        <div className="flex items-center mb-2 lg:mb-3">
-          <span className="mr-3 text-gray-700">Your Rating:</span>
+        <div className="flex items-center mb-3">
+          <span className="mr-3 text-sm text-gray-700 dark:text-gray-300 font-medium">Your Rating:</span>
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
-              size={22}
+              size={20}
               onClick={() => setRating(i + 1)}
-              className={`cursor-pointer ${
-                i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+              className={`cursor-pointer transition-colors duration-200 ${
+                i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300 dark:text-gray-600"
               }`}
             />
           ))}
         </div>
         <textarea
-          className="w-full p-2 border rounded-lg focus:ring-accent focus:border-accent"
-          rows="2"
+          className="w-full p-3 border border-pink-100 dark:border-[var(--color-dark-border)] rounded-xl bg-white dark:bg-[var(--color-dark-surface)] text-secondary dark:text-[var(--color-dark-text)] focus:ring-2 focus:ring-accent focus:outline-none transition"
+          rows="3"
           placeholder="Write your review..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
@@ -102,16 +102,16 @@ export default function ProductReviews({ productId }) {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-1 px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/80 transition disabled:opacity-50 lg:mt-2"
+          className="mt-2 px-5 py-2 bg-accent hover:bg-accent-hover text-white font-semibold rounded-xl shadow-md transition disabled:opacity-50 cursor-pointer"
         >
           {submitting ? "Submitting..." : "Submit Review"}
         </button>
       </form>
 
       {/* Reviews Box */}
-      <div className="border rounded-2xl pl-3 pr-3 bg-white shadow-sm max-h-[100px] overflow-y-auto lg:max-h-[200px] p-4 ">
+      <div className="border border-pink-100/50 dark:border-[var(--color-dark-border)] rounded-2xl p-4 bg-white dark:bg-[var(--color-dark-surface)] shadow-xs max-h-[250px] overflow-y-auto">
         {reviews.length === 0 && (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-400 py-6">
             No reviews yet. Be the first to review!
           </p>
         )}
@@ -119,26 +119,26 @@ export default function ProductReviews({ productId }) {
         {reviews.map((review) => (
           <div
             key={review.reviewId}
-            className="border-b last:border-b-0 py-3"
+            className="border-b last:border-b-0 border-pink-50 dark:border-[var(--color-dark-border)] py-4 first:pt-0"
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="font-medium text-gray-800 text-sm">{review.email}</span>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-semibold text-gray-800 dark:text-[var(--color-dark-text)] text-sm">{review.email}</span>
               <span className="flex">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    size={16}
+                    size={14}
                     className={
                       i < review.rating
                         ? "text-yellow-400 fill-yellow-400"
-                        : "text-gray-300"
+                        : "text-gray-300 dark:text-gray-600"
                     }
                   />
                 ))}
               </span>
             </div>
-            <p className="text-gray-700 text-sm">{review.comment}</p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{review.comment}</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
               {new Date(review.date).toLocaleDateString()}
             </p>
           </div>

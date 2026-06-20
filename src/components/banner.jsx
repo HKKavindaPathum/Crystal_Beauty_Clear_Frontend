@@ -7,35 +7,39 @@ export default function Banner() {
   const navigate = useNavigate();
   return (
     <section
-      className="relative w-full rounded-3xl shadow-2xl border-4 border-yellow-600 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${bannerImg})`,
-      minHeight: '450px' }}
+      className="relative w-full rounded-3xl shadow-xl border-2 border-accent dark:border-[var(--color-accent)] overflow-hidden bg-cover bg-center bg-no-repeat transition-all duration-300"
+      style={{ 
+        backgroundImage: `url(${bannerImg})`,
+        minHeight: '350px' 
+      }}
     >
-      <div className="absolute inset-0 bg-pink-50/70"></div>
-      <div className="relative container mx-auto px-16 py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-pink-50/65 dark:bg-black/70 transition-colors duration-300"></div>
+
+      <div className="relative container mx-auto px-6 md:px-16 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 items-center gap-8">
         {/* Left Content */}
-        <div>
-          <h1 className="text-4xl md:text-5xl font-bold text-pink-900 mb-4">
+        <div className="text-center md:text-left z-10">
+          <h1 className="text-3xl md:text-5xl font-bold font-fancy text-pink-900 dark:text-[var(--color-dark-text)] mb-3 tracking-wide">
             Beauty Products
           </h1>
-          <p className="text-gray-700 mb-6 max-w-md">
+          <p className="text-gray-700 dark:text-gray-300 mb-6 max-w-md text-sm md:text-base leading-relaxed">
             Discover our wide selection of high-quality beauty products that
             bring out your natural glow.
           </p>
           <button
             onClick={() => navigate("/products")}
-            className="bg-pink-400 hover:bg-pink-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition duration-300"
+            className="bg-accent hover:bg-accent-hover text-white font-bold px-6 py-3 rounded-xl shadow-md transition duration-300 cursor-pointer"
           >
             Shop Now
           </button>
         </div>
 
         {/* Right Image */}
-        <div className="flex justify-center md:justify-end">
+        <div className="flex justify-center md:justify-end z-10">
           <img
             src={bannerImage}
             alt="Beauty Products"
-            className="rounded-full shadow-lg max-w-md border-4 border-yellow-600"
+            className="rounded-full shadow-lg max-w-[200px] md:max-w-sm w-full border-2 border-accent dark:border-[var(--color-accent)] object-cover"
           />
         </div>
       </div>

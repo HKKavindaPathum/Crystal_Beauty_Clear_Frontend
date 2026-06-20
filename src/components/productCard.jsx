@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 export default function ProductCard({ product }) {
   return (
     <Link to={"/overview/"+product.productId} 
-    className="w-[300px] h-[400px] bg-pink-100 shadow-md rounded-2xl m-4 overflow-hidden flex flex-col border-3 border-yellow-600 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+    className="w-[280px] h-[380px] bg-white dark:bg-[var(--color-dark-surface)] shadow-md hover:shadow-xl rounded-2xl m-4 overflow-hidden flex flex-col border border-pink-100/50 dark:border-[var(--color-dark-border)] hover:scale-[1.02] transition-all duration-300">
       {/* Image */}
-      <div className="h-[200px] w-full bg-gray-50 flex items-center justify-center overflow-hidden">
+      <div className="h-[180px] w-full bg-gray-50 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
         {product.images && product.images.length > 0 ? (
           <img
             src={product.images[0]}
@@ -20,36 +20,36 @@ export default function ProductCard({ product }) {
       {/* Product Info */}
       <div className="flex-1 p-4 flex flex-col justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">{product.name}</h2>
-          <p className="text-sm text-gray-500 mt-1 h-[48px] overflow-hidden">
+          <h2 className="text-md font-bold font-heading text-secondary dark:text-[var(--color-dark-text)] truncate">{product.name}</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 h-[36px] overflow-hidden leading-relaxed">
             {product.description}
           </p>
         </div>
 
         {/* Pricing */}
-        <div className="mt-3">
+        <div className="mt-2">
           {product.labelledPrice !== product.price ? (
             <div className="flex items-center gap-2">
-              <p className="text-red-500 font-bold text-lg">
+              <p className="text-accent font-bold text-md">
                 Rs. {product.price.toLocaleString()}
               </p>
-              <p className="text-gray-400 line-through text-sm">
+              <p className="text-gray-400 dark:text-gray-500 line-through text-xs">
                 Rs. {product.labelledPrice.toLocaleString()}
               </p>
             </div>
           ) : (
-            <p className="text-gray-700 font-semibold text-lg">
+            <p className="text-secondary dark:text-[var(--color-dark-text)] font-semibold text-md">
               Rs. {product.price.toLocaleString()}
             </p>
           )}
         </div>
 
         {/* Stock & Button */}
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           <span
-            className={`text-sm font-medium ${
+            className={`text-xs font-semibold ${
               product.isAvailable && product.stock > 0
-                ? "text-green-600"
+                ? "text-emerald-600 dark:text-emerald-500"
                 : "text-red-500"
             }`}
           >
@@ -58,9 +58,9 @@ export default function ProductCard({ product }) {
 
           <button
             disabled={!product.isAvailable || product.stock <= 0}
-            className="px-3 py-1 text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 transition"
+            className="px-3 py-1.5 text-xs rounded-xl text-white bg-accent hover:bg-accent-hover disabled:bg-gray-300 dark:disabled:bg-gray-800 disabled:text-gray-500 transition duration-300 cursor-pointer"
           >
-            {product.isAvailable && product.stock > 0 ? "Buy Now" : "Unavailable"}
+            {product.isAvailable && product.stock > 0 ? "View Details" : "Unavailable"}
           </button>
         </div>
       </div>

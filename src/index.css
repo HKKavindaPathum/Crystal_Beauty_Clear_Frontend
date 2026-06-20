@@ -1,12 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Exile&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Exile&family=Playwrite+HU:wght@100..400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-primary: #FAF6F6;
+  --color-secondary: #251B1D;
+  --color-accent: #D4AF37;
+  --color-accent-hover: #C5A028;
+  --color-accent-rose: #E6C280;
+  
+  --color-dark-bg: #120D0E;
+  --color-dark-surface: #1C1416;
+  --color-dark-text: #F5EBEF;
+  --color-dark-border: #2C2224;
 
-@theme{
-    --color-primary:#FBFBFB;
-    --color-secondary:#393E46;
-    --color-accent:#483AA0;
-    --font-fancy: 'Exile', sans-serif;
-    --font-main: 'Playwrite HU' , sans-serif;
+  --font-main: 'Inter', sans-serif;
+  --font-fancy: 'Playfair Display', serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }

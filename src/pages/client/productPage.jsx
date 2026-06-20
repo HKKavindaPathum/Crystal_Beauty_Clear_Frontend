@@ -34,7 +34,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="w-full bg-pink-50 flex flex-wrap justify-center items-center pt-10">
+    <div className="w-full bg-pink-50 dark:bg-[var(--color-dark-bg)] min-h-screen flex flex-wrap justify-center items-start pt-10 pb-20 transition-colors duration-300">
       {products.length > 0 ? (
         products.map((product) => (
           <ProductCard key={product.productId} product={product} />
