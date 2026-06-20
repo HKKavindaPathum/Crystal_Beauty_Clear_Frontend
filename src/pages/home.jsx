@@ -11,9 +11,9 @@ import ContactPage from "./client/contact";
 
 export default function HomePage(){
     return(
-        <div className="w-full h-screen  flex flex-col items-center">
+        <div className="w-full min-h-screen flex flex-col items-center">
             <Header/>
-            <div className="w-full h-[calc(100vh-80px)] flex flex-col items-center">
+            <div className="w-full flex-1 flex flex-col items-center">
                 <Routes path="/*">
                     <Route path="/" element={<HomeContent />}/>
                     <Route path="/products" element={<ProductPage/>}/>

@@ -60,7 +60,7 @@ export default function ProductReviews({ productId }) {
       setReviews(res.data);
     } catch (err) {
       console.log(err);
-      toast.error("Failed to submit review");
+      toast.error(err.response?.data?.message || "Failed to submit review");
     } finally {
       setSubmitting(false);
     }

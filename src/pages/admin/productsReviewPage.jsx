@@ -10,12 +10,14 @@ export default function AdminProductReviews() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const token = localStorage.getItem("token");
-  if (!token) {
-    toast.error("Please login first");
-    return <p className="text-center text-red-500 mt-6">Please login first</p>;
-  }
 
   useEffect(() => {
+    if (!token) {
+      toast.error("Please login first");
+      setLoading(false);
+      return;
+    }
+
     axios
       .get(import.meta.env.VITE_BACKEND_URL + "/api/reviews", {
         headers: { Authorization: `Bearer ${token}` },
@@ -36,7 +38,11 @@ export default function AdminProductReviews() {
         setProducts(productMap);
       })
       .catch(() => toast.error("Failed to load products"));
-  }, []);
+  }, [token]);
+
+  if (!token) {
+    return <p className="text-center text-red-500 mt-6">Please login first</p>;
+  }
 
   const deleteReview = (reviewId) => {
     if (!window.confirm("Are you sure you want to delete this review?")) return;

@@ -46,10 +46,10 @@ export default function AddProductPage() {
         altNames: altNamesArray,
         description,
         images: imageUrls,
-		category,
-        labelledPrice,
-        price,
-        stock,
+        category,
+        labelledPrice: Number(labelledPrice),
+        price: Number(price),
+        stock: Number(stock),
       };
 
       await axios.post(

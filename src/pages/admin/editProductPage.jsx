@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/mediaUpload";
@@ -8,15 +8,24 @@ export default function EditProductPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [productId] = useState(location.state.productId); // keep readonly
-  const [name, setName] = useState(location.state.name);
-  const [altNames, setAltNames] = useState(location.state.altNames.join(","));
-  const [description, setDescription] = useState(location.state.description);
+  const productData = location.state || {};
+
+  const [productId] = useState(productData.productId || ""); // keep readonly
+  const [name, setName] = useState(productData.name || "");
+  const [altNames, setAltNames] = useState(productData.altNames ? productData.altNames.join(",") : "");
+  const [description, setDescription] = useState(productData.description || "");
   const [images, setImages] = useState([]);
-  const [category, setCategory] = useState(location.state.category);
-  const [labelledPrice, setLabelledPrice] = useState(location.state.labelledPrice);
-  const [price, setPrice] = useState(location.state.price);
-  const [stock, setStock] = useState(location.state.stock);
+  const [category, setCategory] = useState(productData.category || "skincare");
+  const [labelledPrice, setLabelledPrice] = useState(productData.labelledPrice || 0);
+  const [price, setPrice] = useState(productData.price || 0);
+  const [stock, setStock] = useState(productData.stock || 0);
+
+  useEffect(() => {
+    if (!location.state) {
+      toast.error("No product details found, redirecting...");
+      navigate("/admin/products");
+    }
+  }, [location.state, navigate]);
 
   async function updateProduct(e) {
     e.preventDefault();
@@ -39,9 +48,9 @@ export default function EditProductPage() {
       description,
       images: imageUrls,
       category, 
-      labelledPrice,
-      price,
-      stock,
+      labelledPrice: Number(labelledPrice),
+      price: Number(price),
+      stock: Number(stock),
     };
 
     try {

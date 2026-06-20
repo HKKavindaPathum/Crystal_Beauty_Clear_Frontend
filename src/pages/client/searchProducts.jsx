@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../../components/productCard";
 import Loading from "../../components/loading";
 import toast from "react-hot-toast";
@@ -9,28 +9,33 @@ export default function SearchProductPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
 
-  const handleSearch = async (e) => {
-    const value = e.target.value;
-    setQuery(value);
-    setIsLoading(true);
-
-    if (value.length === 0) {
+  useEffect(() => {
+    if (query.trim().length === 0) {
       setProducts([]);
       setIsLoading(false);
       return;
     }
 
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/products/search/${value}`
-      );
-      setProducts(response.data);
-    } catch (error) {
-      toast.error("Error fetching products");
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    const delayDebounceFn = setTimeout(async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/products/search/${query}`
+        );
+        setProducts(response.data);
+      } catch (error) {
+        toast.error("Error fetching products");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 400); // 400ms debounce delay
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
   };
 
   return (

@@ -21,12 +21,16 @@ export default function mediaUpload(file){
             supabase.storage.from("images").upload(newName, file, {
                 upsert:false,
                 cacheControl:"3600"
-            }).then(()=>{
-                const publicUrl = supabase.storage.from("images").getPublicUrl(newName).data.publicUrl
-                resolve(publicUrl)
+            }).then(({ data, error })=>{
+                if (error) {
+                    reject(error.message)
+                } else {
+                    const publicUrl = supabase.storage.from("images").getPublicUrl(newName).data.publicUrl
+                    resolve(publicUrl)
+                }
             }).catch(
-                ()=>{
-                    reject("Error occured in supabase connection")
+                (err)=>{
+                    reject("Error occurred in supabase connection: " + (err?.message || err))
                 }
             )
         }

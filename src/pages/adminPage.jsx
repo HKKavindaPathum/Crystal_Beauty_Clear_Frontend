@@ -51,7 +51,15 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="h-screen w-full flex bg-gray-100">
+    <div className="h-screen w-full flex bg-gray-100 relative">
+      {/* Sidebar Backdrop for Mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed md:static top-0 left-0 h-full w-72 bg-white shadow-xl transform transition-transform duration-300 z-40
