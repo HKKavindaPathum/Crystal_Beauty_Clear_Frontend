@@ -127,14 +127,6 @@ export default function Header() {
         >
           Contact
         </NavLink>
-        <NavLink 
-          to="/search" 
-          className={({ isActive }) => 
-            `text-md font-semibold font-heading tracking-wide transition ${isActive ? "text-accent font-bold" : "text-pink-900 dark:text-gray-300 hover:text-accent"}`
-          }
-        >
-          Search
-        </NavLink>
       </nav>
 
       {/* Cart, Theme & User Icons */}
@@ -225,7 +217,6 @@ export default function Header() {
               <Link to="/products" onClick={() => setSideDrawerOpened(false)} className="text-lg font-semibold text-pink-900 dark:text-gray-200 hover:text-accent">Products</Link>
               <Link to="/about" onClick={() => setSideDrawerOpened(false)} className="text-lg font-semibold text-pink-900 dark:text-gray-200 hover:text-accent">About</Link>
               <Link to="/contact" onClick={() => setSideDrawerOpened(false)} className="text-lg font-semibold text-pink-900 dark:text-gray-200 hover:text-accent">Contact</Link>
-              <Link to="/search" onClick={() => setSideDrawerOpened(false)} className="text-lg font-semibold text-pink-900 dark:text-gray-200 hover:text-accent">Search</Link>
 
               {user ? (
                 <div className="flex flex-col items-center w-full mt-4 border-t border-pink-100 dark:border-[var(--color-dark-border)] pt-4">

@@ -4,7 +4,6 @@ import ProductPage from "./client/productPage";
 import ProductOverviewPage from "./client/productOverview";
 import CartPage from "./client/cart";
 import CheckoutPage from "./client/checkOut";
-import SearchProductPage from "./client/searchProducts";
 import HomeContent from "../components/homeContent";
 import AboutPage from "./client/about";
 import ContactPage from "./client/contact";
@@ -21,7 +20,6 @@ export default function HomePage(){
                     <Route path="/contact" element={<ContactPage/>}/>
                     <Route path="/cart" element={<CartPage/>}/>
                     <Route path="/checkout" element={<CheckoutPage/>}/>
-                    <Route path="/search" element={<SearchProductPage />} />
                     <Route path="/overview/:id" element={<ProductOverviewPage/>}/>
                     <Route path="/products/:category" element={<ProductPage />} />
                     <Route path="/*" element={<h1>404 Not Found</h1>}/> 
