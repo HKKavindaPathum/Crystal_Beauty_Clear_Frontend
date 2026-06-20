@@ -1,16 +1,43 @@
 import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent! We'll get back to you soon 😊");
-    setFormData({ name: "", email: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const payload = {
+        access_key: "3cfaa846-0f91-46f4-ab27-05cde43e3abf",
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        subject: "New Contact Message - BeautyClear",
+        from_name: "BeautyClear Store"
+      };
+
+      const res = await axios.post("https://api.web3forms.com/submit", payload);
+
+      if (res.data.success) {
+        toast.success("Message sent successfully! We'll get back to you soon 😊");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error sending message via Web3Forms:", err);
+      toast.error("An error occurred while sending the message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -60,9 +87,10 @@ export default function ContactPage() {
           </div>
           <button
             type="submit"
-            className="w-full bg-accent hover:bg-accent-hover text-white font-bold py-3.5 rounded-xl transition duration-300 shadow-md cursor-pointer hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+            disabled={isSubmitting}
+            className="w-full bg-accent hover:bg-accent-hover disabled:bg-gray-300 dark:disabled:bg-gray-800 disabled:text-gray-500 text-white font-bold py-3.5 rounded-xl transition duration-300 shadow-md cursor-pointer hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent/50 flex items-center justify-center gap-2"
           >
-            Send Message
+            {isSubmitting ? "Sending Message..." : "Send Message"}
           </button>
           <div className="mt-10 text-center text-gray-600 dark:text-gray-400 font-main text-sm">
             <p>Email: <span className="text-pink-700 dark:text-[var(--color-accent)] font-semibold">support@beautyclear.com</span></p>
