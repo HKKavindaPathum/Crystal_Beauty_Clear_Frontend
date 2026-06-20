@@ -39,19 +39,19 @@ export default function SearchProductPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-pink-50 to-white flex flex-col items-center px-4 py-12">
+    <div className="w-full min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-[var(--color-dark-bg)] dark:to-[var(--color-dark-surface)] flex flex-col items-center px-4 py-12 transition-colors duration-300">
       
       {/* Search box */}
       <div className="w-full max-w-2xl flex items-center relative">
         <input
           type="text"
           placeholder="Search for products..."
-          className="w-full h-14 px-5 pr-12 rounded-2xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all text-lg"
+          className="w-full h-14 px-5 pr-12 rounded-2xl border border-pink-100 dark:border-[var(--color-dark-border)] bg-white dark:bg-[var(--color-dark-surface)] text-secondary dark:text-[var(--color-dark-text)] shadow-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all text-lg font-main placeholder-gray-400 dark:placeholder-gray-500"
           value={query}
           onChange={handleSearch}
         />
         <svg
-          className="absolute right-4 text-gray-400 w-6 h-6 pointer-events-none"
+          className="absolute right-4 text-gray-400 dark:text-gray-500 w-6 h-6 pointer-events-none"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ export default function SearchProductPage() {
       {/* Results section */}
       <div className="w-full max-w-7xl mt-10">
         {query.length === 0 ? (
-          <h1 className="text-xl md:text-2xl text-gray-600 font-medium text-center">
+          <h1 className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-medium font-main text-center">
             🔍 Start typing to search for products
           </h1>
         ) : (
@@ -76,8 +76,8 @@ export default function SearchProductPage() {
             ) : (
               <>
                 {products.length === 0 ? (
-                  <h2 className="text-lg text-gray-500 text-center mt-10">
-                    No products found for "<span className="font-semibold">{query}</span>"
+                  <h2 className="text-lg text-gray-500 dark:text-gray-400 text-center mt-10 font-main">
+                    No products found for "<span className="font-semibold text-pink-700 dark:text-[var(--color-accent)]">{query}</span>"
                   </h2>
                 ) : (
                   <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-8">
