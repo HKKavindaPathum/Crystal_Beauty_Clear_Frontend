@@ -15,6 +15,7 @@ import { Menu, LogOut, LayoutDashboard, ShoppingBag, Users, ShoppingCart, Star }
 
 export default function AdminPage() {
   const [status, setStatus] = useState("loading");
+  const [user, setUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function AdminPage() {
             toast.error("You are not authorized to access this page");
             window.location.href = "/";
           } else {
+            setUser(response.data);
             setStatus("authenticated");
           }
         })
@@ -51,55 +53,77 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="h-screen w-full flex bg-gray-100 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
+    <div className="h-screen w-full flex bg-[#FAF6F6] dark:bg-[#120D0E] text-secondary dark:text-[var(--color-dark-text)] transition-colors duration-300 overflow-hidden font-main">
       {/* Sidebar Backdrop for Mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          className="fixed inset-0 bg-black/40 z-30 md:hidden backdrop-blur-xs transition-opacity"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-0 left-0 h-full w-72 bg-white dark:bg-[var(--color-dark-surface)] border-r border-pink-100/50 dark:border-[var(--color-dark-border)] shadow-xl md:shadow-none transform transition-transform duration-300 z-40
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-white dark:bg-[var(--color-dark-surface)] border-r border-pink-100/40 dark:border-[var(--color-dark-border)] shadow-xl md:shadow-none transform transition-transform duration-300 z-40 flex flex-col justify-between
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
-        <div className="p-6 text-center font-bold text-2xl font-heading text-accent tracking-wide border-b border-pink-50 dark:border-[var(--color-dark-border)]">
-          BeautyClear
+        <div className="flex flex-col flex-1">
+          {/* Logo Title */}
+          <div className="p-6 text-center font-bold text-xl font-heading text-accent tracking-widest border-b border-pink-50/50 dark:border-[var(--color-dark-border)] uppercase">
+            BeautyClear
+          </div>
+
+          {/* Nav Links */}
+          <nav className="flex flex-col space-y-1.5 px-4 mt-6">
+            {[
+              { to: "/admin", label: "Dashboard", icon: <LayoutDashboard size={18} />, end: true },
+              { to: "/admin/products", label: "Products", icon: <ShoppingBag size={18} /> },
+              { to: "/admin/users", label: "Users", icon: <Users size={18} /> },
+              { to: "/admin/orders", label: "Orders", icon: <ShoppingCart size={18} /> },
+              { to: "/admin/reviews", label: "Reviews", icon: <Star size={18} /> },
+            ].map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition border-l-4 ${
+                    isActive
+                      ? "bg-accent/10 border-accent text-accent font-bold shadow-xs"
+                      : "border-transparent text-gray-500 dark:text-gray-400 hover:bg-pink-50/50 dark:hover:bg-[#120D0E]/50 hover:text-secondary dark:hover:text-[var(--color-dark-text)]"
+                  }`
+                }
+                onClick={() => setSidebarOpen(false)}
+              >
+                {item.icon}
+                <span className="text-sm">{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
         </div>
-        <nav className="flex flex-col space-y-1.5 px-4 mt-6">
-          {[
-            { to: "/admin", label: "Dashboard", icon: <LayoutDashboard size={18} />, end: true },
-            { to: "/admin/products", label: "Products", icon: <ShoppingBag size={18} /> },
-            { to: "/admin/users", label: "Users", icon: <Users size={18} /> },
-            { to: "/admin/orders", label: "Orders", icon: <ShoppingCart size={18} /> },
-            { to: "/admin/reviews", label: "Reviews", icon: <Star size={18} /> },
-          ].map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition ${
-                  isActive
-                    ? "bg-accent/20 text-accent font-bold shadow-xs"
-                    : "text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-gray-800"
-                }`
-              }
-              onClick={() => setSidebarOpen(false)}
-            >
-              {item.icon}
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+
+        {/* Sidebar Footer: Profile Card */}
+        {user && (
+          <div className="p-4 border-t border-pink-50/50 dark:border-[var(--color-dark-border)] bg-pink-50/10 dark:bg-[#120D0E]/10 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-accent text-white flex items-center justify-center font-bold shadow-sm flex-shrink-0">
+              {user.firstName[0].toUpperCase()}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-secondary dark:text-[var(--color-dark-text)] truncate leading-tight">
+                {user.firstName} {user.lastName}
+              </p>
+              <span className="inline-block mt-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-accent/20 text-accent uppercase leading-none">
+                Admin Profile
+              </span>
+            </div>
+          </div>
+        )}
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Topbar */}
-        <header className="h-16 bg-white dark:bg-[var(--color-dark-surface)] border-b border-pink-100/50 dark:border-[var(--color-dark-border)] shadow-xs flex items-center justify-between px-6 transition-colors duration-300">
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 relative">
+        {/* Glassmorphic Topbar Header */}
+        <header className="h-16 bg-white/70 dark:bg-[var(--color-dark-surface)]/70 backdrop-blur-md border-b border-pink-100/40 dark:border-[var(--color-dark-border)] shadow-xs flex items-center justify-between px-6 z-10 transition-colors duration-300">
           <button
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -107,23 +131,23 @@ export default function AdminPage() {
             <Menu className="h-6 w-6 text-gray-600 dark:text-gray-300" />
           </button>
           
-          <h1 className="text-xl font-bold font-heading text-secondary dark:text-[var(--color-dark-text)] hidden sm:block">
-            Admin Panel
-          </h1>
+          <h2 className="text-lg font-bold font-heading text-secondary dark:text-[var(--color-dark-text)] hidden sm:block">
+            Console Workspace
+          </h2>
           
           <button
             onClick={() => {
               localStorage.removeItem("token");
               window.location.href = "/login";
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-xl shadow-md transition cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl shadow-md transition duration-300 cursor-pointer transform active:scale-95"
           >
-            <LogOut className="h-4 w-4" /> Logout
+            <LogOut className="h-4.5 w-4.5" /> <span>Logout</span>
           </button>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-pink-50/20 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
+        {/* Page Content Dashboard Panel */}
+        <main className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#FAF6F6] dark:bg-[#120D0E] transition-colors duration-300">
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/products" element={<ProductsPage />} />
