@@ -21,40 +21,21 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
       try {
-        const [productsRes, ordersRes, usersRes] = await Promise.all([
-          axios.get(import.meta.env.VITE_BACKEND_URL + "/api/products", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(import.meta.env.VITE_BACKEND_URL + "/api/orders", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(import.meta.env.VITE_BACKEND_URL + "/api/users/all", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+        const res = await axios.get(import.meta.env.VITE_BACKEND_URL + "/api/orders/dashboard/stats", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        const products = productsRes.data;
-        const orders = ordersRes.data;
-        const users = usersRes.data;
-
-        // Calculate sales metrics
-        const completedOrders = orders.filter(
-          (o) => o.status === "completed" || o.status === "delivered"
-        );
-        const totalSales = completedOrders.reduce((sum, o) => sum + o.total, 0);
-
-        // Find low stock items
-        const lowStock = products.filter((p) => p.stock < 5);
+        const { totalSales, totalOrders, totalUsers, totalProducts, lowStockCount, lowStockProducts } = res.data;
 
         setStats({
           totalSales,
-          totalOrders: orders.length,
-          totalUsers: users.length,
-          totalProducts: products.length,
-          lowStockCount: lowStock.length,
+          totalOrders,
+          totalUsers,
+          totalProducts,
+          lowStockCount,
         });
 
-        setLowStockProducts(lowStock);
+        setLowStockProducts(lowStockProducts);
       } catch (err) {
         toast.error("Failed to load dashboard statistics");
         console.error(err);
