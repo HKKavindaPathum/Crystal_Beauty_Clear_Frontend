@@ -89,7 +89,7 @@ export default function Header() {
           onClick={() => navigate("/")}
           className="hidden lg:block font-fancy text-xl font-bold text-pink-900 dark:text-[var(--color-accent)] cursor-pointer tracking-wider"
         >
-          BeautyClear
+          CrystalBeautyClear
         </span>
       </div>
 
