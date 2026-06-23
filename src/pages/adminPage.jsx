@@ -11,12 +11,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loading from "../components/loading";
-import { Menu, LogOut, LayoutDashboard, ShoppingBag, Users, ShoppingCart, Star } from "lucide-react";
+import { Menu, LogOut, LayoutDashboard, ShoppingBag, Users, ShoppingCart, Star, Sun, Moon } from "lucide-react";
 
 export default function AdminPage() {
   const [status, setStatus] = useState("loading");
   const [user, setUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  // Toggle dark class on <html>
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -135,15 +146,26 @@ export default function AdminPage() {
             Console Workspace
           </h2>
           
-          <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              window.location.href = "/login";
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl shadow-md transition duration-300 cursor-pointer transform active:scale-95"
-          >
-            <LogOut className="h-4.5 w-4.5" /> <span>Logout</span>
-          </button>
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="p-2 rounded-xl bg-pink-50 dark:bg-dark-surface hover:bg-pink-100/60 dark:hover:bg-dark-border text-pink-600 dark:text-accent transition duration-300 cursor-pointer shadow-xs border border-pink-100/20 dark:border-dark-border"
+              aria-label="Toggle Theme"
+            >
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </button>
+
+            <button
+              onClick={() => {
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl shadow-md transition duration-300 cursor-pointer transform active:scale-95"
+            >
+              <LogOut className="h-4.5 w-4.5" /> <span>Logout</span>
+            </button>
+          </div>
         </header>
 
         {/* Page Content Dashboard Panel */}
