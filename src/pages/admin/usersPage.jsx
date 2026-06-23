@@ -12,23 +12,23 @@ export default function UsersPage() {
 
   const token = localStorage.getItem("token");
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/users/all",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setUsers(response.data);
-      setIsLoading(false);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to load users");
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/users/all",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setUsers(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to load users");
+        setIsLoading(false);
+      }
+    };
+
     if (isLoading) fetchUsers();
-  }, [isLoading]);
+  }, [isLoading, token]);
 
   const toggleBlock = async (userId, isBlocked) => {
     try {

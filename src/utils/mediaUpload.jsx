@@ -21,7 +21,7 @@ export default function mediaUpload(file){
             supabase.storage.from("images").upload(newName, file, {
                 upsert:false,
                 cacheControl:"3600"
-            }).then(({ data, error })=>{
+            }).then(({ error })=>{
                 if (error) {
                     reject(error.message)
                 } else {

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import ImageSlider from "../../components/imageSlider";
 import Loading from "../../components/loading";
-import { addToCart, getCart } from "../../utils/cart";
+import { addToCart } from "../../utils/cart";
 import ProductReviews from "../../components/ProductReviews";//see
 
 export default function ProductOverviewPage() {
@@ -27,7 +27,7 @@ export default function ProductOverviewPage() {
 				setStatus("error");
 				toast.error("Error fetching product details");
 			});
-	}, []);
+	}, [productId]);
 	return (
 		<div className="w-full min-h-screen bg-pink-50 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
 			{status === "success" && (
