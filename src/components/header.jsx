@@ -69,7 +69,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full h-[80px] shadow-lg bg-pink-200 dark:bg-[var(--color-dark-surface)] border-b dark:border-[var(--color-dark-border)] flex justify-between items-center px-4 md:px-8 sticky top-0 z-50 transition-colors duration-300">
+    <header className="w-full h-[80px] shadow-lg bg-pink-200 dark:bg-[var(--color-dark-surface)] border-b border-transparent dark:border-[var(--color-dark-border)] flex justify-between items-center px-4 md:px-8 sticky top-0 z-50 transition-colors duration-300">
       
       {/* Mobile Drawer Trigger */}
       <GiHamburgerMenu
