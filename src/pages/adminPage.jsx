@@ -80,8 +80,8 @@ export default function AdminPage() {
       >
         <div className="flex flex-col flex-1">
           {/* Logo Title */}
-          <div className="h-16 flex items-center justify-center font-bold text-xl font-heading text-accent tracking-widest border-b border-pink-50/50 dark:border-[var(--color-dark-border)] uppercase">
-            BeautyClear
+          <div className="h-16 flex items-center justify-center font-bold text-lg font-heading text-accent tracking-wider border-b border-pink-50/50 dark:border-[var(--color-dark-border)] uppercase">
+            CrystalBeautyClear
           </div>
 
           {/* Nav Links */}
