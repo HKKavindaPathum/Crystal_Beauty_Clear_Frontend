@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
       </span>
 
       {/* Image Wrapper */}
-      <div className="w-full">
+      <div className="w-full shrink-0">
         <div className="aspect-square w-full bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
           {product.images && product.images.length > 0 ? (
             <img

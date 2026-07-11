@@ -111,7 +111,7 @@ export default function AdminProductReviews() {
               className="border border-pink-100/40 dark:border-[var(--color-dark-border)] rounded-3xl overflow-hidden hover:shadow-lg hover:border-accent/40 transition-all duration-300 cursor-pointer bg-white dark:bg-[var(--color-dark-surface)] group flex flex-col h-full"
               onClick={() => setSelectedProduct(productId)}
             >
-              <div className="w-full">
+              <div className="w-full shrink-0">
                 <div className="relative overflow-hidden aspect-video">
                   <img
                     src={product?.images[0] || "/placeholder.png"}

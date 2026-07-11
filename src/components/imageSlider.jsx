@@ -6,7 +6,7 @@ export default function ImageSlider(props){
 
     return(
         <div className="w-full max-w-[500px] flex flex-col items-center">
-            <div className="w-full">
+            <div className="w-full shrink-0">
                 <div className="w-full aspect-[4/5] max-h-[500px] overflow-hidden rounded-3xl shadow-md border dark:border-[var(--color-dark-border)] bg-white dark:bg-[var(--color-dark-surface)]">
                     <img src={images[currentIndex]} className="w-full h-full object-cover" />
                 </div>
