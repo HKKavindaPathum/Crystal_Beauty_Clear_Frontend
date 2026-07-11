@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
       </span>
 
       {/* Image */}
-      <div className="aspect-square w-full bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
+      <div className="aspect-square w-full shrink-0 bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
         {product.images && product.images.length > 0 ? (
           <img
             src={product.images[0]}
