@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
   return (
     <Link 
       to={"/overview/" + product.productId} 
-      className="group w-full max-w-[280px] bg-white dark:bg-[var(--color-dark-surface)] shadow-sm hover:shadow-xl rounded-2xl overflow-hidden flex flex-col border border-pink-100/50 dark:border-[var(--color-dark-border)] hover:-translate-y-1 transition-all duration-300 relative"
+      className="group block w-full max-w-[280px] bg-white dark:bg-[var(--color-dark-surface)] shadow-sm hover:shadow-xl rounded-2xl overflow-hidden border border-pink-100/50 dark:border-[var(--color-dark-border)] hover:-translate-y-1 transition-all duration-300 relative"
     >
       {/* Floating Stock Badge */}
       <span
@@ -19,24 +19,24 @@ export default function ProductCard({ product }) {
         {!isOutOfStock ? "In Stock" : "Out of Stock"}
       </span>
 
-      {/* Image Wrapper */}
-      <div className="w-full shrink-0">
-        <div className="aspect-square w-full bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
-          {product.images && product.images.length > 0 ? (
-            <img
-              src={product.images[0]}
-              alt={product.name}
-              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-          ) : (
+      {/* Image Container with Absolute Positioning to prevent Safari collapse */}
+      <div className="aspect-square w-full bg-pink-50/10 dark:bg-[var(--color-dark-bg)] overflow-hidden relative">
+        {product.images && product.images.length > 0 ? (
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-gray-400 text-sm">No Image</span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Product Info */}
-      <div className="grow p-4 flex flex-col justify-between gap-3">
+      <div className="p-4 flex flex-col justify-between gap-3">
         <div>
           <h3 className="text-sm font-bold font-heading text-secondary dark:text-[var(--color-dark-text)] line-clamp-1 group-hover:text-accent transition duration-300">
             {product.name}
