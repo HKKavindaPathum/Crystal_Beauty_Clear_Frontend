@@ -15,6 +15,7 @@ export default function ProductOverviewPage() {
     const navigate = useNavigate();
 
 	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "instant" });
 		axios
 			.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId)
 			.then((response) => {
@@ -35,7 +36,7 @@ export default function ProductOverviewPage() {
 					{/* Mobile Title */}
 					<h1 className="w-full md:hidden block text-center text-3xl font-fancy text-secondary dark:text-[var(--color-dark-text)] font-semibold mb-4">
 						{product.name}
-						{product.altNames.map((altName, idx) => (
+						{product.altNames?.filter(altName => altName && altName.trim() !== "").map((altName, idx) => (
 							<span key={idx} className="text-2xl text-gray-500 dark:text-gray-400 font-normal">
 								{" | " + altName}
 							</span>
@@ -52,7 +53,7 @@ export default function ProductOverviewPage() {
 						{/* Desktop Title */}
 						<h1 className="hidden md:block text-left text-4xl font-fancy text-secondary dark:text-[var(--color-dark-text)] font-bold mb-4">
 							{product.name}
-							{product.altNames.map((altName, idx) => (
+							{product.altNames?.filter(altName => altName && altName.trim() !== "").map((altName, idx) => (
 								<span key={idx} className="text-3xl text-gray-500 dark:text-gray-400 font-normal">
 									{" | " + altName}
 								</span>
