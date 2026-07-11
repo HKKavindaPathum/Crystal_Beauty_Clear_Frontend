@@ -111,12 +111,14 @@ export default function AdminProductReviews() {
               className="border border-pink-100/40 dark:border-[var(--color-dark-border)] rounded-3xl overflow-hidden hover:shadow-lg hover:border-accent/40 transition-all duration-300 cursor-pointer bg-white dark:bg-[var(--color-dark-surface)] group flex flex-col h-full"
               onClick={() => setSelectedProduct(productId)}
             >
-              <div className="relative overflow-hidden aspect-video shrink-0">
-                <img
-                  src={product?.images[0] || "/placeholder.png"}
-                  alt={product?.name || productId}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 border-b border-pink-50/50 dark:border-[var(--color-dark-border)]"
-                />
+              <div className="w-full">
+                <div className="relative overflow-hidden aspect-video">
+                  <img
+                    src={product?.images[0] || "/placeholder.png"}
+                    alt={product?.name || productId}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 border-b border-pink-50/50 dark:border-[var(--color-dark-border)]"
+                  />
+                </div>
               </div>
               <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
                 <div>

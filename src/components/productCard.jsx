@@ -19,22 +19,24 @@ export default function ProductCard({ product }) {
         {!isOutOfStock ? "In Stock" : "Out of Stock"}
       </span>
 
-      {/* Image */}
-      <div className="aspect-square w-full shrink-0 bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
-        {product.images && product.images.length > 0 ? (
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-        ) : (
-          <span className="text-gray-400 text-sm">No Image</span>
-        )}
+      {/* Image Wrapper */}
+      <div className="w-full">
+        <div className="aspect-square w-full bg-pink-50/10 dark:bg-[var(--color-dark-bg)] flex items-center justify-center overflow-hidden relative">
+          {product.images && product.images.length > 0 ? (
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          ) : (
+            <span className="text-gray-400 text-sm">No Image</span>
+          )}
+        </div>
       </div>
 
       {/* Product Info */}
-      <div className="flex-1 p-4 flex flex-col justify-between gap-3">
+      <div className="grow p-4 flex flex-col justify-between gap-3">
         <div>
           <h3 className="text-sm font-bold font-heading text-secondary dark:text-[var(--color-dark-text)] line-clamp-1 group-hover:text-accent transition duration-300">
             {product.name}
