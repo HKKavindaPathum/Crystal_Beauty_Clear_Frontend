@@ -15,7 +15,7 @@ export default function ProductOverviewPage() {
     const navigate = useNavigate();
 
 	useEffect(() => {
-		window.scrollTo({ top: 0, behavior: "instant" });
+		setStatus("loading");
 		axios
 			.get(import.meta.env.VITE_BACKEND_URL + "/api/products/" + productId)
 			.then((response) => {
@@ -29,6 +29,12 @@ export default function ProductOverviewPage() {
 				toast.error("Error fetching product details");
 			});
 	}, [productId]);
+
+	useEffect(() => {
+		if (status === "success") {
+			window.scrollTo(0, 0);
+		}
+	}, [status, productId]);
 	return (
 		<div className="w-full min-h-screen bg-pink-50 dark:bg-[var(--color-dark-bg)] transition-colors duration-300">
 			{status === "success" && (
